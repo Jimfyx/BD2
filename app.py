@@ -59,6 +59,11 @@ def actualizarDoctor():
     for doctor in listadoDoctores:
         if str(doctor["indice"]) == doctorElegido:
             doctorEligidoId =str(doctor["_id"])
+
+    nuevoNombre = input("Ingrese el nuevo nombre: ")
+    nuevoApellido = input("Ingrese el nuevo apellido: ")
+
+
     # buscamos la especialidad
     msg, reg = miclinica.obtenerEspecialista()
     listadoEspecialistas = list(reg)
@@ -74,7 +79,7 @@ def actualizarDoctor():
         if str(esp["indice"]) == especialidadNumerica:
             especialidadEscogida = esp["_id"]
 
-    msg, contador = miclinica.actualizarEspecialidadDoctores(doctorEligidoId,especialidadEscogida)
+    msg, contador = miclinica.actualizarNombreApellidoDoctores(doctorEligidoId, nuevoNombre, nuevoApellido, especialidadEscogida)
 
 
 opcion = "n"

@@ -112,6 +112,34 @@ class clinica:
         msg, reg = self.db.obtenerRegistro(colDoctores, query)
         return msg, reg
 
+    def actualizarNombreApellidoDoctores(self, doctor, nuevoNombre, nuevoApellido, nuevaEspecialidad):
+        filtro = {"_id": ObjectId(doctor)}
+
+        if nuevoNombre == "":
+            return "", "El doctor debe de tener un nombre"
+        if nuevoApellido == "":
+            return "", "El doctor debe de tener un apellido"
+        if nuevaEspecialidad == "":
+            return "", "Debe de tener al menos una especialidad"
+
+        datosNuevos = {
+                "nombre": {
+                    "nombre": nuevoNombre,
+                    "activo": True
+                },
+                "apellido": {
+                    "apellido": nuevoApellido,
+                    "activo": True
+                },
+            "$push": {
+                "especialidades": {
+                    "id": str(nuevaEspecialidad).upper(),
+                    "activo": True
+                }
+            }
+        }
+        return self.db.actualizarRegistro(colDoctores, filtro,datosNuevos,1)
+
     def actualizarEspecialidadDoctores(self, doctor, nuevaEspecialidad):
         filtro= {"_id": ObjectId(doctor)}
 
